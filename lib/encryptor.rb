@@ -8,22 +8,16 @@ class Encryptor
   end
 
   def decrypted_message
-    decrypted_slices.flatten.join
+    rotated_message(:reverse).join
   end
 
   def encrypted_message
-    encrypted_slices.flatten.join
+    rotated_message(:forward).join
   end
 
-  def decrypted_slices
-    message.chars.each_slice(4).map do |chars|
-      Rotator.new(chars,key.offsets,:reverse).rotated_chars
-    end
-  end
-
-  def encrypted_slices
-    message.chars.each_slice(4).map do |chars|
-      Rotator.new(chars,key.offsets).rotated_chars
+  def rotated_message(dir)
+    message.chars.each_slice(4).flat_map do |chars|
+      Rotator.new(chars,key.offsets,dir).rotated_chars
     end
   end
 end
