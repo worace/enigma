@@ -22,6 +22,25 @@ describe Rotator do
     input = chunk("a")
     assert_equal chunk("b"), Rotator.new(input, offsets).rotated_chars
   end
+
+  it "rotates characters around end of alphabet" do
+    offsets = chunk(11)
+    input = chunk("6")
+    assert_equal chunk("e"), Rotator.new(input, offsets).rotated_chars
+
+  end
+
+  it "reverses characters using provided offsets" do
+    offsets = chunk(1)
+    input = chunk("b")
+    assert_equal chunk("a"), Rotator.new(input, offsets, :reverse).rotated_chars
+  end
+
+  it "reverses characters around end of alphabet" do
+    offsets = chunk(11)
+    input = chunk("e")
+    assert_equal chunk("6"), Rotator.new(input, offsets, :reverse).rotated_chars
+  end
 end
 
 def chunk(value, size = 4)

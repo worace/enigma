@@ -17,4 +17,10 @@ describe Enigma do
     key = "41521"
     assert_equal "2.ql", Enigma.new.encrypt("ruby",key,date)
   end
+
+  it "decrypts 4 chars" do
+    date = "020315" #square -> 412699225; offsets: 9225
+    key = "41521"
+    assert_equal "ruby", Enigma.new.decrypt("2.ql",key,date)
+  end
 end
