@@ -7,8 +7,18 @@ class Encryptor
     @key = key
   end
 
+  def decrypted_message
+    decrypted_slices.flatten.join
+  end
+
   def encrypted_message
     encrypted_slices.flatten.join
+  end
+
+  def decrypted_slices
+    message.chars.each_slice(4).map do |chars|
+      Rotator.new(chars,key.offsets,:reverse).rotated_chars
+    end
   end
 
   def encrypted_slices
