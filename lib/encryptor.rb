@@ -17,7 +17,7 @@ class Encryptor
 
   def rotated_message(dir)
     message.chars.each_slice(4).flat_map do |chars|
-      Rotator.new(chars,key.offsets,dir).rotated_chars
+      Rotator.new(chars,key.offsets,CharSet.new(dir)).rotated_chars
     end
   end
 end

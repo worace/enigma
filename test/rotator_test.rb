@@ -1,12 +1,17 @@
 require "minitest/spec"
 require "minitest/autorun"
 require_relative "../lib/rotator"
+require_relative "../lib/char_set"
 
 describe Rotator do
-  it "has an alphabet" do
-    #lower chars, digits, space, period, comma
-    alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
-    assert_equal alpha, Rotator::ALPHABET
+  it "uses a charset to get alphabet info" do
+    r = Rotator.new(chunk("a"), nil, CharSet.new(:reverse))
+    assert_equal CharSet::ALPHABETS[:reverse], r.char_set.alphabet
+  end
+
+  it "uses forward charset by default" do
+    r = Rotator.new(chunk("a"), nil)
+    assert_equal CharSet::ALPHABETS[:forward], r.char_set.alphabet
   end
 
   it "finds indices of chars" do
@@ -33,13 +38,13 @@ describe Rotator do
   it "reverses characters using provided offsets" do
     offsets = chunk(1)
     input = chunk("b")
-    assert_equal chunk("a"), Rotator.new(input, offsets, :reverse).rotated_chars
+    assert_equal chunk("a"), Rotator.new(input, offsets, CharSet.new(:reverse)).rotated_chars
   end
 
   it "reverses characters around end of alphabet" do
     offsets = chunk(11)
     input = chunk("e")
-    assert_equal chunk("6"), Rotator.new(input, offsets, :reverse).rotated_chars
+    assert_equal chunk("6"), Rotator.new(input, offsets, CharSet.new(:reverse)).rotated_chars
   end
 end
 
