@@ -23,4 +23,21 @@ describe Enigma do
     key = "41521"
     assert_equal "ruby", Enigma.new.decrypt("2.ql",key,date)
   end
+
+  it "encrypts a longer message" do
+    key = "41521"
+    date = "020315"
+    assert_equal "svx.i6xm rmjsr8fi.4xjptaopn", Enigma.new.encrypt("heil pizza whats up ..end..",key,date)
+  end
+
+  it "decrypts a longer message" do
+    key = "41521"
+    date = "020315"
+    assert_equal "heil pizza whats up ..end..", Enigma.new.decrypt("svx.i6xm rmjsr8fi.4xjptaopn",key,date)
+  end
+
+  it "cracks a message containing the giveaway string" do
+    date = "020315"
+    assert_equal "heil pizza whats up ..end..", Enigma.new.crack("svx.i6xm rmjsr8fi.4xjptaopn",date)
+  end
 end

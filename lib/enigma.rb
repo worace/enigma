@@ -10,4 +10,7 @@ class Enigma
   def decrypt(message, key, date)
     Encryptor.new(message, Key.new(key,date)).decrypted_message
   end
+
+  def crack(message, date)
+  end
 end

@@ -24,5 +24,11 @@ describe Key do
   it "calculates combined offsets" do
     assert_equal [50, 17, 54, 26], Key.new("41521","020315").offsets
   end
+
+  it "determines missing key given date and valid match string" do
+    skip
+    key = Key.crack("020315","4xjptaopn")
+    assert_equal "41521", key.key
+  end
 end
 
