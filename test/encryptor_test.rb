@@ -4,13 +4,8 @@ require_relative "../lib/encryptor"
 require_relative "../lib/key"
 
 describe Encryptor do
-  before do
-    @key = Key.new(11111,020315)
-  end
-  #example usage:
-  #ruby ./lib/decrypt.rb encrypted.txt decrypted.txt 82648 030415
-  it "finds the date_offset for the date" do
-    skip
-    assert_equal 9225, Encryptor.new("",@key).date_offset
+  it "encrypts a message using a key" do
+    key = Key.new("41521","020315")
+    assert_equal "2.ql", Encryptor.new("ruby",key).encrypted_message
   end
 end
