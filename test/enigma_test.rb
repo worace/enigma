@@ -12,6 +12,7 @@ describe Enigma do
   end
 
   it "encrypts 4 chars" do
+    skip
     # 9225
     # A: 9 B: 2 C: 2 D: 5
     # 41521
