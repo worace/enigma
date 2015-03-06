@@ -10,6 +10,6 @@ describe OffsetCracker do
     message = "yuny"
     key = OffsetCracker.new(message, date).key
     #assert_equal date, key.date
-    assert_equal "41521", key.key
+    assert_equal "41521", key
   end
 end

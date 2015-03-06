@@ -29,8 +29,10 @@ class OffsetCracker
   def key
     key_chars = message.chars.last(4)
     date_offsets = Key.new("00000",date).offsets
-
     pre_date_chars = Rotator.new(key_chars, date_offsets, CharSet.new(:reverse)).rotated_chars
+    # for each Char c find some offset o for which
+    # reverse-rotating c by o will yield corresponding
+    # "crack char" for that position
 
     #pre_date_chars + reversed key offsets == "nd.."
     #p -> n (2 or 41)
@@ -40,10 +42,17 @@ class OffsetCracker
     #["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
     #key: [2, 15, 26, 18]; objective: 41 15 52 21
     #chars = Rotator.new(pre_date_charse, [????],CharSet.new(:reverse)).rotated_chars
-    key = CRACK_CHARS.zip(pre_date_chars).map do |pair|
-      CharSet.new(:reverse).distance(*pair)
+    #"pslt" -> "nd.."
+    pre_date_chars.zip(CRACK_CHARS).map do |pair|
+      puts "looking for pair #{pair}"
+      enc, char = pair
+      cs = CharSet.new(:reverse)
+      (0..(cs.length * 2 - 1)).find do |rotation|
+        puts "checking rotation #{rotation}"
+        puts "checking #{cs.char_at((cs.position(enc) + rotation) % cs.length)} for match b/t #{pair}"
+        cs.char_at((cs.position(enc) + rotation) % cs.length) == char
+      end
     end
-    raise key.inspect
-    Key.new(key.map(&:to_s).join,date)
+
   end
 end
