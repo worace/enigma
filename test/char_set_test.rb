@@ -28,4 +28,9 @@ describe CharSet do
     assert_equal 5, CharSet.new(:reverse).position("7")
     assert_equal 3, CharSet.new.position("d")
   end
+
+  it "finds distance between 2 chars" do
+    assert_equal 17, CharSet.new(:reverse).distance("4","n")
+    assert_equal 17, CharSet.new(:reverse).distance("n","4")
+  end
 end

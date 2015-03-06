@@ -1,8 +1,8 @@
 class Key
   attr_reader :key, :date
   def initialize(key, date)
-    @key = key.to_i
-    @date = date.to_i
+    @key = key.chars
+    @date = date.chars
   end
 
   def offsets
@@ -10,16 +10,16 @@ class Key
   end
 
   def key_offsets
-    overlapping_slices(key.to_s, 2).map(&:to_i)
+    overlapping_slices(key, 2).map { |pair| pair.join.to_i }
   end
 
   def date_offsets
-    (date ** 2).to_s.chars.last(4).map(&:to_i)
+    (date.join.to_i ** 2).to_s.chars.last(4).map(&:to_i)
   end
 
-  def overlapping_slices(string, length)
-    if string.length >= length
-      [string[0..(length-1)]] + overlapping_slices(string[1..-1], length)
+  def overlapping_slices(chars, length)
+    if chars.length >= length
+      [chars.first(2)] + overlapping_slices(chars[1..-1], length)
     else
       []
     end

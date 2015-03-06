@@ -19,4 +19,8 @@ class CharSet
   def position(char)
     alphabet.index(char)
   end
+
+  def distance(a,b)
+    (position(b) - position(a)).abs
+  end
 end
