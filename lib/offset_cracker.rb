@@ -9,17 +9,35 @@ class OffsetCracker
     @message = message
   end
 
-  def key
-    key_chars = message.chars.last(4)
-    date_offsets = Key.new("00000",date).offsets
-    pre_date_chars = Rotator.new(key_chars, date_offsets, CharSet.new(:reverse)).rotated_chars
+  def key_chars
+    message.chars.last(4)
+  end
 
-    pre_date_chars.zip(CRACK_CHARS).map do |pair|
+  def date_offsets
+    Key.new("00000",date).offsets
+  end
+
+  def chars_minus_date_offset
+    Rotator.new(key_chars, date_offsets, char_set).rotated_chars
+  end
+
+  def offsets
+    chars_minus_date_offset.zip(CRACK_CHARS).map do |pair|
       enc, char = pair
-      cs = CharSet.new(:reverse)
-      (0..(cs.length * 2 - 1)).find do |rotation|
-        cs.char_at((cs.position(enc) + rotation) % cs.length) == char
+      possible_offsets.find do |offset|
+        decrypted_index = (char_set.position(enc) + offset) % char_set.length
+        char_set.char_at(decrypted_index) == char
       end
     end
+  end
+
+  def possible_offsets
+    # use twice the length of the char set in case the original
+    # is behind the encrypted char and we need to wrap around
+    (0..(char_set.length * 2 - 1))
+  end
+
+  def char_set
+    CharSet.new(:reverse)
   end
 end
