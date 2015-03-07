@@ -34,11 +34,6 @@ describe OffsetCracker do
     assert_equal "020315".chars, key.date
   end
 
-  it "knows if a set of offsets produce a valid string-key" do
-    assert OffsetCracker.new(nil, nil).valid_key_offsets?([41, 15, 52, 21])
-    refute OffsetCracker.new(nil, nil).valid_key_offsets?([2,15,13,21])
-  end
-
   it "turns a set of offsets into a valid key string" do
     #2,15,13,21 -> 41,15,52,21 -> 41521
     assert_equal "41521", OffsetCracker.new(nil,nil).key_string([2,15,13,21])

@@ -38,19 +38,6 @@ class OffsetCracker
     Key.new(key_string,date)
   end
 
-  def valid_key_offsets?(offsets)
-    chars = offsets.map(&:to_s).join.chars
-    chars.each_with_index.all? do |char, index|
-      if index == 0 || index == (chars.length - 1)
-        true
-      elsif index % 2 == 1
-        char == chars[index+1]
-      else
-        char == chars[index-1]
-      end
-    end
-  end
-
   def offsets
     chars_minus_date_offset.zip(CRACK_CHARS).map do |pair|
       enc, char = pair
