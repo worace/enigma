@@ -29,10 +29,10 @@ class OffsetCracker
 
   def offsets
     chars_minus_date_offset.zip(CRACK_CHARS).map do |pair|
-      enc, char = pair
+      encrypted_char, target_char = pair.first, pair.last
       possible_offsets.find do |offset|
-        decrypted_index = (char_set.position(enc) + offset) % char_set.length
-        char_set.char_at(decrypted_index) == char
+        decrypted_index = (char_set.position(encrypted_char) + offset) % char_set.length
+        char_set.char_at(decrypted_index) == target_char
       end
     end
   end
