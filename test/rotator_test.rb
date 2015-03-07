@@ -46,6 +46,23 @@ describe Rotator do
     input = chunk("e")
     assert_equal chunk("6"), Rotator.new(input, offsets, CharSet.new(:reverse)).rotated_chars
   end
+
+  it "rotates longer strings" do
+    input  = "abcdefgh".chars
+    output = "efghijkl".chars
+    offsets = chunk(4)
+    assert_equal output, Rotator.new(input,offsets,CharSet.new).rotated_chars
+    assert_equal input, Rotator.new(output,offsets,CharSet.new(:reverse)).rotated_chars
+  end
+
+  it "rotates non-mod-4 length strings" do
+    input  = "abcdefgh".chars
+    output = "efghijkl".chars
+    offsets = chunk(4)
+    assert_equal output.first(7), Rotator.new(input.first(7),offsets,CharSet.new).rotated_chars
+    assert_equal output.first(6), Rotator.new(input.first(6),offsets,CharSet.new).rotated_chars
+    assert_equal output.first(5), Rotator.new(input.first(5),offsets,CharSet.new).rotated_chars
+  end
 end
 
 def chunk(value, size = 4)

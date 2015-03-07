@@ -14,7 +14,9 @@ class Rotator
   end
 
   def rotated_indices
-    char_indices.zip(offsets).map { |pair| pair.reduce(:+) % char_set.length}
+    char_indices.each_slice(4).flat_map do |slice|
+      slice.zip(offsets).map { |pair| pair.reduce(:+) % char_set.length}
+    end
   end
 
   def char_indices
