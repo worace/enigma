@@ -1,5 +1,7 @@
 require_relative "rotator"
 require_relative "key"
+require_relative "key_offset"
+require_relative "date_offset"
 
 class OffsetCracker
   CRACK_CHARS = ["n","d",".","."]
@@ -14,7 +16,7 @@ class OffsetCracker
   end
 
   def date_offsets
-    Key.new("00000",date).offsets
+    DateOffset.new(date).offsets
   end
 
   def chars_minus_date_offset
@@ -35,7 +37,7 @@ class OffsetCracker
   end
 
   def key
-    Key.new(key_string,date)
+    Key.new(offsets,date_offsets)
   end
 
   def offsets

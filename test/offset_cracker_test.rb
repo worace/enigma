@@ -30,8 +30,8 @@ describe OffsetCracker do
     date = "020315"
     message = "yuny"
     key = OffsetCracker.new(message, date).key
-    assert_equal "41521".chars, key.key
-    assert_equal "020315".chars, key.date
+    assert_valid_rotation [41,15,52,21], key.key_offsets
+    assert_equal [9,2,2,5], key.date_offsets
   end
 
   it "turns a set of offsets into a valid key string" do
