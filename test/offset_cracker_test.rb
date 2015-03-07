@@ -25,6 +25,24 @@ describe OffsetCracker do
     offsets = OffsetCracker.new(message, date).offsets
     assert_valid_rotation [41,15,52,21], offsets
   end
+
+  it "returns a key object with necessary key when asked" do
+    date = "020315"
+    message = "yuny"
+    key = OffsetCracker.new(message, date).key
+    assert_equal "41521".chars, key.key
+    assert_equal "020315".chars, key.date
+  end
+
+  it "knows if a set of offsets produce a valid string-key" do
+    assert OffsetCracker.new(nil, nil).valid_key_offsets?([41, 15, 52, 21])
+    refute OffsetCracker.new(nil, nil).valid_key_offsets?([2,15,13,21])
+  end
+
+  it "turns a set of offsets into a valid key string" do
+    #2,15,13,21 -> 41,15,52,21 -> 41521
+    assert_equal "41521", OffsetCracker.new(nil,nil).key_string([2,15,13,21])
+  end
 end
 
 def assert_valid_rotation(a,b)
