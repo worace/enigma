@@ -8,11 +8,11 @@ class MessageCracker
     @date = date
   end
 
-  def key
-    OffsetCracker.new(message, date).key
+  def key(cracker = OffsetCracker)
+    cracker.new(message, date).key
   end
 
-  def cracked_message
-    Rotator.new(message.chars,key.offsets,CharSet.new(:reverse)).rotated_chars.join
+  def cracked_message(cracker = OffsetCracker)
+    Rotator.new(message.chars,key(cracker).offsets,CharSet.new(:reverse)).rotated_chars.join
   end
 end
