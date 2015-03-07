@@ -1,6 +1,6 @@
 require_relative "encryptor"
 require_relative "key"
-require_relative "offset_cracker"
+require_relative "message_cracker"
 
 class Enigma
   ALPHABET = ("a".."z").to_a + ("0".."9").to_a + [" ", ".", ","]
@@ -13,7 +13,6 @@ class Enigma
   end
 
   def crack(message, date)
-    k = OffsetCracker.new(message, date).key
-    puts k
+    MessageCracker.new(message,date).cracked_message
   end
 end
