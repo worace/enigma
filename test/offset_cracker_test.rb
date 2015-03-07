@@ -33,11 +33,6 @@ describe OffsetCracker do
     assert_valid_rotation [41,15,52,21], key.key_offsets
     assert_equal [9,2,2,5], key.date_offsets
   end
-
-  it "turns a set of offsets into a valid key string" do
-    #2,15,13,21 -> 41,15,52,21 -> 41521
-    assert_equal "41521", OffsetCracker.new(nil,nil).key_string([2,15,13,21])
-  end
 end
 
 def assert_valid_rotation(a,b)

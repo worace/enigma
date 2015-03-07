@@ -23,19 +23,6 @@ class OffsetCracker
     Rotator.new(key_chars, date_offsets, char_set).rotated_chars
   end
 
-  def key_string(offsets = offsets)
-    head = offsets.shift
-    head = head + char_set.length if head < 10 #need 2-digit num to start
-    adjusted = offsets.reduce([head]) do |shifted,o|
-      o = o + char_set.length if o < 10
-      until shifted.last.to_s[-1] == o.to_s[0]
-        o = o + char_set.length
-      end
-      shifted + [o]
-    end
-    "#{adjusted.shift}#{adjusted.shift.to_s[-1]}#{adjusted.last}" #wtf god help me
-  end
-
   def key
     Key.new(offsets,date_offsets)
   end
