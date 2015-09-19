@@ -12,6 +12,10 @@ class Key
     new(KeyOffset.new(key_string).offsets, DateOffset.new(date_string).offsets)
   end
 
+  def self.gen
+    new(Key.new, DateOffset.new)
+  end
+
   def offsets
     key_offsets.zip(date_offsets).map { |pair| pair.reduce(:+) }
   end

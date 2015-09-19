@@ -1,7 +1,11 @@
 class KeyOffset
   attr_reader :key_string
-  def initialize(key_string)
+  def initialize(key_string = random_key_string)
     @key_string = key_string
+  end
+
+  def random_key_string
+    (0...5).map { rand(9) }.join
   end
 
   def offsets

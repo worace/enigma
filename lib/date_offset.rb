@@ -1,7 +1,11 @@
 class DateOffset
   attr_reader :date_string
-  def initialize(date_string)
+  def initialize(date_string = today_date_string)
     @date_string = date_string
+  end
+
+  def today_date_string
+    Time.now.strftime("%m%d%y")
   end
 
   def offsets
