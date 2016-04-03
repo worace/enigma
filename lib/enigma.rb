@@ -17,3 +17,35 @@ class Enigma
     puts k
   end
 end
+
+
+students = ["horace", "lovisa", "mike"]
+
+def rand_key
+  5.times.map { (0..9).to_a.sample }.join("")
+end
+
+def date_string
+  Date.today.strftime("%d%m%y")
+
+end
+
+def challenges
+  ["update your key to be 6 digits", "update your char map to handle upper case letters", "update your key to be sourced from a key word rather than random key"]
+end
+
+
+stuff = students.map do |s|
+  c = challenges.sample
+  key = rand_key
+  date = date_string
+  {student: s,
+   challenge: c,
+   encryption_date: date,
+   key: key,
+   ciphertext: Encryptor.new(c, Key.new(key,date)).encrypted_message
+  }
+end
+
+
+puts stuff
